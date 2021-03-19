@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Input from './TypingTestInput';
+import Input from './InputSection';
 import WordSection from './WordSection';
 
 export default function TestSection() {
