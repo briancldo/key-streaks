@@ -35,7 +35,8 @@
   ],
   "rules": {
       "prettier/prettier": "error",
-      "promise/always-return": "off"
+      "promise/always-return": "off",
+      "react/prop-types": "off"
   },
   "settings": {
       "react": {
