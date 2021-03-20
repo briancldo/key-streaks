@@ -21,21 +21,28 @@ export default function TestSection() {
   const [gameStatus, setGameStatus] = useState(GAME_STATUSES.ongoing);
   const styles = useStyles();
 
-  useEffect(() => {
+  function reactToGameOver() {
     if (gameStatus !== GAME_STATUSES.ongoing) {
       document.getElementById('new-game-button').focus();
     }
-  }, [gameStatus, words]);
-  useEffect(() => {
-    if (currentWordIndex < words.length) {
-      let word = words[currentWordIndex];
-      if (currentWordIndex < words.length - 1) word = `${word} `;
-      setCurrentWord(word);
-    }
-  }, [currentWordIndex, words]);
+  }
+  useEffect(reactToGameOver, [gameStatus]);
+
+  function computeCurrentWord() {
+    if (currentWordIndex >= words.length) return;
+
+    let word = words[currentWordIndex];
+    if (currentWordIndex < words.length - 1) word = `${word} `;
+    setCurrentWord(word);
+  }
+  useEffect(computeCurrentWord, [currentWordIndex, words]);
+
+  function declareGameOver() {
+    setGameStatus(GAME_STATUSES.lost);
+  }
 
   function finishCurrentWord(passed = true) {
-    if (!passed) return setGameStatus(GAME_STATUSES.lost);
+    if (!passed) return declareGameOver();
 
     setCurrentWordIndex((index) => {
       if (index + 1 === words.length) setGameStatus(GAME_STATUSES.won);
