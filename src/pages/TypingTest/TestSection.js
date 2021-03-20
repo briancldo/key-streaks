@@ -15,6 +15,7 @@ export default function TestSection() {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentWord, setCurrentWord] = useState(words[0]);
   const [currentEntry, setCurrentEntry] = useState('');
+  const [currentStreak, setCurrentStreak] = useState(0);
   const [gameStatus, setGameStatus] = useState(GAME_STATUSES.ongoing);
 
   useEffect(() => {
@@ -30,6 +31,7 @@ export default function TestSection() {
 
     setCurrentWordIndex((index) => {
       if (index + 1 === words.length) setGameStatus(GAME_STATUSES.won);
+      setCurrentStreak((streak) => streak + 1);
       return index + 1;
     });
   }
@@ -49,6 +51,9 @@ export default function TestSection() {
         disabled={gameStatus !== GAME_STATUSES.ongoing}
         {...{ currentEntry, setCurrentEntry }}
       />
+      <p>
+        Streak: <b style={{ color: 'green' }}>{currentStreak}</b> words!
+      </p>
       <p>{gameStatus}</p>
       {gameStatus !== GAME_STATUSES.ongoing && (
         <button onClick={restartGame}>New Game</button>
