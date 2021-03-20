@@ -33,6 +33,8 @@ export default function InputSection(props) {
       onChange={checkLetter}
       placeholder={currentWord}
       disabled={disabled}
+      variant='outlined'
+      size='medium'
     />
   );
 }

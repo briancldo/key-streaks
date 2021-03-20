@@ -1,6 +1,8 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
 
+import { useStyles } from './WordSection.styles';
+
 function getWordsStringFromArray(wordsArray) {
   return wordsArray.join(' ');
 }
@@ -15,9 +17,10 @@ export default function WordSection(props) {
       ? []
       : words.slice(currentWordIndex + 1)
   );
+  const styles = useStyles();
 
   return (
-    <Card>
+    <Card className={styles.card}>
       <p>
         <span style={{ color: '#ccc' }}>{completedWordsString}</span>&nbsp;
         <span style={{ color: 'red' }}>{words[currentWordIndex]}</span>&nbsp;

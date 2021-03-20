@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import Input from './InputSection';
 import WordSection from './WordSection';
+import { useStyles } from './TestSection.styles';
 import { getWordBatch } from '../../data/words';
 
 const WORDS_PER_PAGE = 40;
@@ -18,6 +19,7 @@ export default function TestSection() {
   const [currentEntry, setCurrentEntry] = useState('');
   const [currentStreak, setCurrentStreak] = useState(0);
   const [gameStatus, setGameStatus] = useState(GAME_STATUSES.ongoing);
+  const styles = useStyles();
 
   useEffect(() => {
     if (gameStatus !== GAME_STATUSES.ongoing) {
@@ -51,7 +53,7 @@ export default function TestSection() {
   }
 
   return (
-    <div>
+    <div className={styles.testSection}>
       <WordSection {...{ words, currentWordIndex }} />
       <Input
         currentWord={currentWord}
