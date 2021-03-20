@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 
 import Input from './InputSection';
 import WordSection from './WordSection';
+import { getWordBatch } from '../../data/words';
 
+const WORDS_PER_PAGE = 40;
 const GAME_STATUSES = {
   ongoing: undefined,
   won: 'You won!',
@@ -10,8 +12,7 @@ const GAME_STATUSES = {
 };
 
 export default function TestSection() {
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const words = ['bdo', 'is', 'the', 'goat'];
+  const [words, setWords] = useState(getWordBatch(WORDS_PER_PAGE));
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentWord, setCurrentWord] = useState(words[0]);
   const [currentEntry, setCurrentEntry] = useState('');
@@ -31,13 +32,15 @@ export default function TestSection() {
 
     setCurrentWordIndex((index) => {
       if (index + 1 === words.length) setGameStatus(GAME_STATUSES.won);
-      setCurrentStreak((streak) => streak + 1);
       return index + 1;
     });
+    setCurrentStreak((streak) => streak + 1);
   }
 
   function restartGame() {
+    setWords(getWordBatch(WORDS_PER_PAGE));
     setCurrentEntry('');
+    setCurrentStreak(0);
     setCurrentWordIndex(0);
     setGameStatus(GAME_STATUSES.ongoing);
   }

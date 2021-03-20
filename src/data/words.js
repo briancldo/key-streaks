@@ -1,4 +1,4 @@
-function getBatch(size) {
+function getWordBatch(size) {
   const batch = [];
   const wordsLength = words.length;
 
@@ -10,7 +10,7 @@ function getBatch(size) {
   return batch;
 }
 
-export { getBatch, words };
+export { getWordBatch, words };
 
 const words = [
   'abandon',
