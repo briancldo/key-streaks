@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Card from '@material-ui/core/Card';
 
 function getWordsStringFromArray(wordsArray) {
@@ -6,18 +6,20 @@ function getWordsStringFromArray(wordsArray) {
 }
 
 export default function WordSection(props) {
-  const { words = [] } = props;
-  const [wordsString, setWordsString] = useState(
-    getWordsStringFromArray(words)
+  const { words = [], currentWordIndex } = props;
+  const completedWordsString = getWordsStringFromArray(
+    words.slice(0, currentWordIndex)
   );
-
-  useEffect(() => {
-    setWordsString(getWordsStringFromArray(words));
-  }, [words]);
+  const incompleteWordsString = getWordsStringFromArray(
+    words.slice(currentWordIndex)
+  );
 
   return (
     <Card>
-      <p>{wordsString}</p>
+      <p>
+        <b>{completedWordsString}</b>&nbsp;
+        {incompleteWordsString}
+      </p>
     </Card>
   );
 }

@@ -18,12 +18,10 @@ export default function TestSection() {
   const [gameStatus, setGameStatus] = useState(GAME_STATUSES.ongoing);
 
   useEffect(() => {
-    try {
+    if (currentWordIndex < words.length) {
       let word = words[currentWordIndex];
       if (currentWordIndex < words.length - 1) word = `${word} `;
       setCurrentWord(word);
-    } catch {
-      throw new Error('No more words.');
     }
   }, [currentWordIndex, words]);
 
@@ -31,11 +29,7 @@ export default function TestSection() {
     if (!passed) return setGameStatus(GAME_STATUSES.lost);
 
     setCurrentWordIndex((index) => {
-      if (index + 1 === words.length) {
-        setGameStatus(GAME_STATUSES.won);
-        return index;
-      }
-
+      if (index + 1 === words.length) setGameStatus(GAME_STATUSES.won);
       return index + 1;
     });
   }
@@ -48,7 +42,7 @@ export default function TestSection() {
 
   return (
     <div>
-      <WordSection words={words} />
+      <WordSection {...{ words, currentWordIndex }} />
       <Input
         currentWord={currentWord}
         finishCurrentWord={finishCurrentWord}
