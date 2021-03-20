@@ -14,6 +14,7 @@ export default function TestSection() {
   const words = ['bdo', 'is', 'the', 'goat'];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentWord, setCurrentWord] = useState(words[0]);
+  const [currentEntry, setCurrentEntry] = useState('');
   const [gameStatus, setGameStatus] = useState(GAME_STATUSES.ongoing);
 
   useEffect(() => {
@@ -39,6 +40,12 @@ export default function TestSection() {
     });
   }
 
+  function restartGame() {
+    setCurrentEntry('');
+    setCurrentWordIndex(0);
+    setGameStatus(GAME_STATUSES.ongoing);
+  }
+
   return (
     <div>
       <WordSection words={words} />
@@ -46,8 +53,12 @@ export default function TestSection() {
         currentWord={currentWord}
         finishCurrentWord={finishCurrentWord}
         disabled={gameStatus !== GAME_STATUSES.ongoing}
+        {...{ currentEntry, setCurrentEntry }}
       />
       <p>{gameStatus}</p>
+      {gameStatus !== GAME_STATUSES.ongoing && (
+        <button onClick={restartGame}>New Game</button>
+      )}
     </div>
   );
 }
