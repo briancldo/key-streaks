@@ -19,8 +19,8 @@ export default function WordSection(props) {
   return (
     <Card>
       <p>
-        <b>{completedWordsString}</b>&nbsp;
-        <b style={{ color: 'red' }}>{words[currentWordIndex]}</b>&nbsp;
+        <span style={{ color: '#ccc' }}>{completedWordsString}</span>&nbsp;
+        <span style={{ color: 'red' }}>{words[currentWordIndex]}</span>&nbsp;
         {incompleteWordsString}
       </p>
     </Card>
