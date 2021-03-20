@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Logo from '../../components/Logo';
 import TestSection from './TestSection';
 import { useRootStyles } from './TypingTest.styles';
 
@@ -8,7 +9,7 @@ export default function TypingTest() {
 
   return (
     <div className={styles.typingTestMain}>
-      <h1>Typing Test</h1>
+      <Logo />
       <div className={styles.testSection}>
         <TestSection />
       </div>
