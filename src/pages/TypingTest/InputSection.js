@@ -10,11 +10,15 @@ export default function InputSection(props) {
     setCurrentEntry,
   } = props;
 
-  useEffect(
-    () => !disabled && document.getElementById('typing-test-input').focus(),
-    [disabled]
-  );
-  useEffect(() => setCurrentEntry(''), [currentWord, setCurrentEntry]);
+  function focusOnInput() {
+    if (!disabled) document.getElementById('typing-test-input').focus();
+  }
+  useEffect(focusOnInput, [disabled]);
+
+  function clearCurrentEntry() {
+    setCurrentEntry('');
+  }
+  useEffect(clearCurrentEntry, [currentWord, setCurrentEntry]);
 
   function checkLetter(event) {
     const value = event.target.value;
