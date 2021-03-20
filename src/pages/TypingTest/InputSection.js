@@ -5,16 +5,14 @@ export default function InputSection(props) {
   const { currentWord, finishCurrentWord, disabled } = props;
   const [currentEntry, setCurrentEntry] = useState('');
 
-  useEffect(() => {
-    console.log('new word');
-    setCurrentEntry('');
-  }, [currentWord]);
+  useEffect(() => setCurrentEntry(''), [currentWord]);
 
   function checkLetter(event) {
     const value = event.target.value;
 
     if (value === currentWord) finishCurrentWord();
     if (!currentWord.startsWith(value)) finishCurrentWord(false);
+    if (value.length < currentEntry.length) finishCurrentWord(false);
 
     setCurrentEntry(value);
   }
