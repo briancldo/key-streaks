@@ -20,6 +20,11 @@ export default function TestSection() {
   const [gameStatus, setGameStatus] = useState(GAME_STATUSES.ongoing);
 
   useEffect(() => {
+    if (gameStatus !== GAME_STATUSES.ongoing) {
+      document.getElementById('new-game-button').focus();
+    }
+  }, [gameStatus, words]);
+  useEffect(() => {
     if (currentWordIndex < words.length) {
       let word = words[currentWordIndex];
       if (currentWordIndex < words.length - 1) word = `${word} `;
@@ -59,7 +64,9 @@ export default function TestSection() {
       </p>
       <p>{gameStatus}</p>
       {gameStatus !== GAME_STATUSES.ongoing && (
-        <button onClick={restartGame}>New Game</button>
+        <button id='new-game-button' onClick={restartGame}>
+          New Game (Enter key)
+        </button>
       )}
     </div>
   );

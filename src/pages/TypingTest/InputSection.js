@@ -10,6 +10,10 @@ export default function InputSection(props) {
     setCurrentEntry,
   } = props;
 
+  useEffect(
+    () => !disabled && document.getElementById('typing-test-input').focus(),
+    [disabled]
+  );
   useEffect(() => setCurrentEntry(''), [currentWord, setCurrentEntry]);
 
   function checkLetter(event) {
@@ -24,6 +28,7 @@ export default function InputSection(props) {
 
   return (
     <TextField
+      id='typing-test-input'
       value={currentEntry}
       onChange={checkLetter}
       placeholder={currentWord}
