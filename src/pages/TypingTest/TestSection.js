@@ -12,8 +12,12 @@ const GAME_STATUSES = {
   lost: 'You lost!',
 };
 
+function getNextWordBatch() {
+  return getWordBatch(WORDS_PER_PAGE);
+}
+
 export default function TestSection() {
-  const [words, setWords] = useState(getWordBatch(WORDS_PER_PAGE));
+  const [words, setWords] = useState(getNextWordBatch);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentWord, setCurrentWord] = useState(words[0]);
   const [currentEntry, setCurrentEntry] = useState('');
