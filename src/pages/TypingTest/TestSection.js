@@ -5,15 +5,19 @@ import WordSection from './WordSection';
 import { useStyles } from './TestSection.styles';
 import { getWordBatch } from '../../data/words';
 
-const WORDS_PER_PAGE = 40;
+const WORDS_PER_PAGE = 10;
 const GAME_STATUSES = {
   ongoing: undefined,
   won: 'You won!',
   lost: 'You lost!',
 };
 
+function getNextWordBatch() {
+  return getWordBatch(WORDS_PER_PAGE);
+}
+
 export default function TestSection() {
-  const [words, setWords] = useState(getWordBatch(WORDS_PER_PAGE));
+  const [words, setWords] = useState(getNextWordBatch());
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentWord, setCurrentWord] = useState(words[0]);
   const [currentEntry, setCurrentEntry] = useState('');
@@ -31,8 +35,7 @@ export default function TestSection() {
   function computeCurrentWord() {
     if (currentWordIndex >= words.length) return;
 
-    let word = words[currentWordIndex];
-    if (currentWordIndex < words.length - 1) word = `${word} `;
+    let word = `${words[currentWordIndex]} `;
     setCurrentWord(word);
   }
   useEffect(computeCurrentWord, [currentWordIndex, words]);
@@ -41,11 +44,15 @@ export default function TestSection() {
     setGameStatus(GAME_STATUSES.lost);
   }
 
+  function finishCurrentPage() {
+    setWords(getNextWordBatch());
+    setCurrentWordIndex(0);
+  }
   function finishCurrentWord(passed = true) {
     if (!passed) return declareGameOver();
 
     setCurrentWordIndex((index) => {
-      if (index + 1 === words.length) setGameStatus(GAME_STATUSES.won);
+      if (index + 1 === words.length) finishCurrentPage();
       return index + 1;
     });
     setCurrentStreak((streak) => streak + 1);
