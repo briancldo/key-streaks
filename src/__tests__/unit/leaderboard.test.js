@@ -11,7 +11,7 @@ describe('leaderboard', () => {
     });
 
     test('returns leaderboard if stored', () => {
-      const leaderboard = [{ score: 123 }, { score: 122 }, { score: 121 }];
+      const leaderboard = [{ streak: 123 }, { streak: 122 }, { streak: 121 }];
       localStorage.setItem(leaderboardKey, JSON.stringify(leaderboard));
 
       const returnedLeaderboard = getLeaderboard();
@@ -45,60 +45,64 @@ describe('leaderboard', () => {
     test('simply adds if fewer than max number of scores', () => {
       localStorage.setItem(
         leaderboardKey,
-        JSON.stringify([{ score: 2 }, { score: 1 }])
+        JSON.stringify([{ streak: 2 }, { streak: 1 }])
       );
 
       addScoreIfQualified(3);
       const leaderboard = getLeaderboard();
 
-      expect(leaderboard).toEqual([{ score: 3 }, { score: 2 }, { score: 1 }]);
+      expect(leaderboard).toEqual([
+        { streak: 3 },
+        { streak: 2 },
+        { streak: 1 },
+      ]);
     });
 
     test('does not exceed max number of scores', () => {
       const savedLeaderboard = [];
-      for (let i = 10; i > 0; i--) savedLeaderboard.push({ score: i });
+      for (let i = 10; i > 0; i--) savedLeaderboard.push({ streak: i });
       localStorage.setItem(leaderboardKey, JSON.stringify(savedLeaderboard));
 
       addScoreIfQualified(11);
       const leaderboard = getLeaderboard();
 
       expect(leaderboard).toHaveLength(10);
-      expect(leaderboard[0].score).toBe(11);
-      expect(leaderboard[9].score).toBe(2);
-      expect(leaderboard.sort((a, b) => (a.score < b.score ? 1 : -1))).toEqual(
-        leaderboard
-      );
+      expect(leaderboard[0].streak).toBe(11);
+      expect(leaderboard[9].streak).toBe(2);
+      expect(
+        leaderboard.sort((a, b) => (a.streak < b.streak ? 1 : -1))
+      ).toEqual(leaderboard);
     });
 
     test('score not added if not among top scores', () => {
       const savedLeaderboard = [];
-      for (let i = 10; i > 0; i--) savedLeaderboard.push({ score: i });
+      for (let i = 10; i > 0; i--) savedLeaderboard.push({ streak: i });
       localStorage.setItem(leaderboardKey, JSON.stringify(savedLeaderboard));
 
       addScoreIfQualified(0);
       const leaderboard = getLeaderboard();
 
       expect(leaderboard).toHaveLength(10);
-      expect(leaderboard[0].score).toBe(10);
-      expect(leaderboard[9].score).toBe(1);
-      expect(leaderboard.sort((a, b) => (a.score < b.score ? 1 : -1))).toEqual(
-        leaderboard
-      );
+      expect(leaderboard[0].streak).toBe(10);
+      expect(leaderboard[9].streak).toBe(1);
+      expect(
+        leaderboard.sort((a, b) => (a.streak < b.streak ? 1 : -1))
+      ).toEqual(leaderboard);
     });
 
     test('inserts in proper sorted order', () => {
-      const savedLeaderboard = [10, 9, 7, 6].map((score) => ({ score }));
+      const savedLeaderboard = [10, 9, 7, 6].map((streak) => ({ streak }));
       localStorage.setItem(leaderboardKey, JSON.stringify(savedLeaderboard));
 
       addScoreIfQualified(8);
       const leaderboard = getLeaderboard();
 
       expect(leaderboard).toEqual([
-        { score: 10 },
-        { score: 9 },
-        { score: 8 },
-        { score: 7 },
-        { score: 6 },
+        { streak: 10 },
+        { streak: 9 },
+        { streak: 8 },
+        { streak: 7 },
+        { streak: 6 },
       ]);
     });
   });

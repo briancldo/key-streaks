@@ -5,7 +5,7 @@ function validateLeaderboard(leaderboard) {
   if (!Array.isArray(leaderboard)) throw new Error('noarr');
 
   for (const place of leaderboard) {
-    if (typeof place.score !== 'number') throw new Error('nonum');
+    if (typeof place.streak !== 'number') throw new Error('nonum');
   }
 }
 
@@ -22,9 +22,9 @@ function getLeaderboard() {
   }
 }
 
-function addScoreIfQualified(score, leaderboard = getLeaderboard()) {
-  const newLeaderboard = [...leaderboard, { score }]
-    .sort((a, b) => (a.score < b.score ? 1 : -1))
+function addScoreIfQualified(streak, leaderboard = getLeaderboard()) {
+  const newLeaderboard = [...leaderboard, { streak }]
+    .sort((a, b) => (a.streak < b.streak ? 1 : -1))
     .slice(0, MAX_SCORES);
   localStorage.setItem(leaderboardKey, JSON.stringify(newLeaderboard));
 
