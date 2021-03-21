@@ -3,10 +3,11 @@ const leaderboardKey = 'personalLeaderboard';
 
 function getLeaderboard() {
   try {
-    const leaderboardString = localStorage.getItem(leaderboardKey) || [];
+    const leaderboardString = localStorage.getItem(leaderboardKey) || '[]';
     return JSON.parse(leaderboardString);
   } catch {
     localStorage.setItem(leaderboardKey, '[]');
+    return [];
   }
 }
 
