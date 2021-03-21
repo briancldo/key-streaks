@@ -13,7 +13,7 @@ export default function Leaderboard(props) {
       <Typography variant='h5'>Leaderboard</Typography>
       {leaderboard.map((entry, index) => (
         <p key={`personalLeaderboard${index + 1}`}>
-          <b>{index + 1})</b> {entry.score}
+          <b>{index + 1})</b> {entry.streak}
         </p>
       ))}
     </Card>
