@@ -27,6 +27,8 @@ function addScoreIfQualified(score, leaderboard = getLeaderboard()) {
     .sort((a, b) => (a.score < b.score ? 1 : -1))
     .slice(0, MAX_SCORES);
   localStorage.setItem(leaderboardKey, JSON.stringify(newLeaderboard));
+
+  return newLeaderboard;
 }
 
 export { getLeaderboard, addScoreIfQualified };

@@ -1,9 +1,17 @@
 import React from 'react';
+import Card from '@material-ui/core/Card';
 
-import { getLeaderboard } from '../../utils/leaderboard';
+export default function Leaderboard(props) {
+  const { leaderboard } = props;
 
-export default function Leaderboard() {
-  getLeaderboard();
-
-  return <p>Leaderboard</p>;
+  return (
+    <Card>
+      <h3>Leaderboard</h3>
+      {leaderboard.map((entry, index) => (
+        <p key={`personalLeaderboard${index + 1}`}>
+          <b>{index + 1})</b> {entry.score}
+        </p>
+      ))}
+    </Card>
+  );
 }
