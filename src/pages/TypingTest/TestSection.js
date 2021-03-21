@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import Input from './InputSection';
 import WordSection from './WordSection';
+import Leaderboard from './Leaderboard';
 import { useStyles } from './TestSection.styles';
 import { getWordBatch } from '../../data/words';
 
@@ -84,6 +85,7 @@ export default function TestSection() {
           New Game (Enter key)
         </button>
       )}
+      <Leaderboard />
     </div>
   );
 }
