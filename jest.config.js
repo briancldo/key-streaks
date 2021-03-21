@@ -1,5 +1,6 @@
-module.exports = {
-  testEnvironment: 'node',
+export default {
+  testEnvironment: 'jest-environment-node',
+  transform: {},
   verbose: true,
   coverageThreshold: {
     global: {

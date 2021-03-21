@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 
 import Input from './InputSection';
 import WordSection from './WordSection';
+import Leaderboard from './Leaderboard';
 import { useStyles } from './TestSection.styles';
 import { getWordBatch } from '../../data/words';
+import { getLeaderboard, addScoreIfQualified } from '../../utils/leaderboard';
 
 const WORDS_PER_PAGE = 10;
 const GAME_STATUSES = {
@@ -23,13 +25,20 @@ export default function TestSection() {
   const [currentEntry, setCurrentEntry] = useState('');
   const [currentStreak, setCurrentStreak] = useState(0);
   const [gameStatus, setGameStatus] = useState(GAME_STATUSES.ongoing);
+  const [leaderboard, setLeaderboard] = useState(getLeaderboard());
   const styles = useStyles();
 
+  function updateLeaderboard() {
+    const newLeaderboard = addScoreIfQualified(currentStreak, leaderboard);
+    setLeaderboard(newLeaderboard);
+  }
   function reactToGameOver() {
     if (gameStatus !== GAME_STATUSES.ongoing) {
+      updateLeaderboard();
       document.getElementById('new-game-button').focus();
     }
   }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(reactToGameOver, [gameStatus]);
 
   function computeCurrentWord() {
@@ -84,6 +93,7 @@ export default function TestSection() {
           New Game (Enter key)
         </button>
       )}
+      <Leaderboard leaderboard={leaderboard} />
     </div>
   );
 }
