@@ -39,6 +39,7 @@ export default function InputSection(props) {
       disabled={disabled}
       variant='outlined'
       size='medium'
+      autoComplete='off'
     />
   );
 }
