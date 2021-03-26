@@ -1,6 +1,14 @@
 import React, { useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 
+import { useStyles } from './InputSection.styles';
+
+const inputSectionInputProps = {
+  style: {
+    fontSize: 25,
+  },
+};
+
 export default function InputSection(props) {
   const {
     currentWord,
@@ -9,6 +17,7 @@ export default function InputSection(props) {
     currentEntry,
     setCurrentEntry,
   } = props;
+  const styles = useStyles();
 
   function focusOnInput() {
     if (!disabled) document.getElementById('typing-test-input').focus();
@@ -40,6 +49,8 @@ export default function InputSection(props) {
       variant='outlined'
       size='medium'
       autoComplete='off'
+      className={styles.inputSection}
+      InputProps={inputSectionInputProps}
     />
   );
 }
