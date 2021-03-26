@@ -10,7 +10,7 @@ export default function TypingTest() {
   return (
     <div className={styles.typingTestMain}>
       <Logo />
-      <div className={styles.testSection}>
+      <div className={styles.testSectionWrapper}>
         <TestSection />
       </div>
     </div>

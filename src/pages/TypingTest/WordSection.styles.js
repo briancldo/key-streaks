@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 const useStyles = makeStyles({
   card: {
     height: '20%',
-    width: '80%',
+    width: '40%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
