@@ -9,9 +9,10 @@ const useRootStyles = makeStyles({
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
-  testSection: {
+  testSectionWrapper: {
     display: 'flex',
     flex: 1,
+    width: '100%',
   },
 });
 
