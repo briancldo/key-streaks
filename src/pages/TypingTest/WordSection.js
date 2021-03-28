@@ -21,7 +21,6 @@ export default function WordSection(props) {
         '\n'
       )
     : completedWords.splice(words.length / 2, 0, '\n');
-  console.log({ completedWords, incompleteWords });
   const completedWordsString = joinWords(completedWords);
   const incompleteWordsString = joinWords(incompleteWords);
   const styles = useStyles();

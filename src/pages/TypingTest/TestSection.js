@@ -5,6 +5,7 @@ import WordSection from './WordSection';
 import Leaderboard from './Leaderboard';
 import { useStyles } from './TestSection.styles';
 import { getWordBatch } from '../../data/words';
+import { mistakes } from '../../data/constants';
 import { getLeaderboard, addScoreIfQualified } from '../../utils/leaderboard';
 
 const WORDS_PER_PAGE = 10;
@@ -25,6 +26,7 @@ export default function TestSection() {
   const [currentEntry, setCurrentEntry] = useState('');
   const [currentStreak, setCurrentStreak] = useState(0);
   const [gameStatus, setGameStatus] = useState(GAME_STATUSES.ongoing);
+  const [mistake, setMistake] = useState();
   const [leaderboard, setLeaderboard] = useState(getLeaderboard());
   const styles = useStyles();
 
@@ -57,8 +59,17 @@ export default function TestSection() {
     setWords(getNextWordBatch());
     setCurrentWordIndex(0);
   }
-  function finishCurrentWord(passed = true) {
-    if (!passed) return declareGameOver();
+  function handleMistake(mistake = {}) {
+    const { code, entry } = mistake;
+
+    if (code === mistakes.INCORRECT_CHARACTER)
+      setMistake(`${currentWord} = ✅, ${entry} = ❌`);
+    if (code === mistakes.BACKSPACE) setMistake('backspace');
+
+    declareGameOver();
+  }
+  function finishCurrentWord({ mistake } = {}) {
+    if (mistake) return handleMistake(mistake);
 
     setCurrentWordIndex((index) => {
       if (index + 1 === words.length) finishCurrentPage();
@@ -72,6 +83,7 @@ export default function TestSection() {
     setCurrentEntry('');
     setCurrentStreak(0);
     setCurrentWordIndex(0);
+    setMistake();
     setGameStatus(GAME_STATUSES.ongoing);
   }
 
@@ -93,6 +105,7 @@ export default function TestSection() {
           New Game (Enter key)
         </button>
       )}
+      {mistake && <p>Mistake: {mistake}</p>}
       <Leaderboard leaderboard={leaderboard} />
     </div>
   );
