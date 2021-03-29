@@ -2,13 +2,21 @@ import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
   mistakeWrapper: {
-    height: '100%',
-    width: '100%',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 8,
+    height: '100%',
+    width: '100%',
+    marginTop: '5%',
+    marginBottom: '5%',
   },
 });
 
-export { useStyles };
+const useIncorrectCharacterStyles = makeStyles({
+  incorrectCharacter: {
+    color: 'red',
+  },
+});
+
+export { useStyles, useIncorrectCharacterStyles };
