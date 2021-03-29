@@ -11,7 +11,7 @@ const mistakeContentMapping = {
 };
 
 function BackspaceMistake() {
-  return <Typography variant='body1'>Backspace</Typography>;
+  return <Typography variant='h4'>Backspace</Typography>;
 }
 
 function IncorrectCharacterMistake(props) {
@@ -20,14 +20,14 @@ function IncorrectCharacterMistake(props) {
 
   return (
     <span>
-      <Typography variant='body1'>
+      <Typography variant='h4'>
         {entry.slice(0, -1)}
         <span className={styles.incorrectCharacter}>
           {entry[entry.length - 1]}
         </span>
       </Typography>
 
-      <Typography variant='body1'>
+      <Typography variant='h4'>
         {currentWord.slice(0, entry.length - 1)}
         <span className={styles.incorrectCharacter}>
           {currentWord[entry.length - 1]}

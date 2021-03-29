@@ -6,16 +6,20 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 8,
-    height: '100%',
-    width: '100%',
-    marginTop: '5%',
-    marginBottom: '5%',
+    height: 'auto',
+    width: 'auto',
+    paddingTop: '10%',
+    paddingBottom: '10%',
+    paddingLeft: '10%',
+    paddingRight: '10%',
+    marginTop: '10%',
+    marginBottom: '10%',
   },
 });
 
 const useIncorrectCharacterStyles = makeStyles({
   incorrectCharacter: {
-    color: 'red',
+    backgroundColor: '#ff4444',
   },
 });
 

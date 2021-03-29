@@ -10,8 +10,8 @@ const useStyles = makeStyles({
     justifyContent: 'flex-start',
   },
   mistake: {
-    height: '10%',
-    width: '20%',
+    minHeight: '5%',
+    minWidth: '10%',
   },
 });
 
