@@ -1,17 +1,13 @@
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
-  testSection: {
+  mistakeWrapper: {
     height: '100%',
     width: '100%',
     display: 'flex',
-    flexDirection: 'column',
+    justifyContent: 'center',
     alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-  mistake: {
-    height: '10%',
-    width: '20%',
+    borderRadius: 8,
   },
 });
 

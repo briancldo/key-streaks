@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 
 import Input from './InputSection';
 import WordSection from './WordSection';
+import Mistake from './Mistake';
 import Leaderboard from './Leaderboard';
 import { useStyles } from './TestSection.styles';
 import { getWordBatch } from '../../data/words';
-import { mistakes } from '../../data/constants';
 import { getLeaderboard, addScoreIfQualified } from '../../utils/leaderboard';
 
 const WORDS_PER_PAGE = 10;
@@ -60,12 +60,7 @@ export default function TestSection() {
     setCurrentWordIndex(0);
   }
   function handleMistake(mistake = {}) {
-    const { code, entry } = mistake;
-
-    if (code === mistakes.INCORRECT_CHARACTER)
-      setMistake(`${currentWord} = ✅, ${entry} = ❌`);
-    if (code === mistakes.BACKSPACE) setMistake('backspace');
-
+    setMistake(mistake);
     declareGameOver();
   }
   function finishCurrentWord({ mistake } = {}) {
@@ -105,7 +100,11 @@ export default function TestSection() {
           New Game (Enter key)
         </button>
       )}
-      {mistake && <p>Mistake: {mistake}</p>}
+      {mistake && (
+        <div className={styles.mistake}>
+          <Mistake {...{ ...mistake, currentWord }} />
+        </div>
+      )}
       <Leaderboard leaderboard={leaderboard} />
     </div>
   );
