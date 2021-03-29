@@ -17,6 +17,7 @@ export default function InputSection(props) {
     disabled,
     currentEntry,
     setCurrentEntry,
+    inputRef,
   } = props;
   const styles = useStyles();
 
@@ -56,6 +57,7 @@ export default function InputSection(props) {
       autoComplete='off'
       className={styles.inputSection}
       InputProps={inputSectionInputProps}
+      innerRef={inputRef}
     />
   );
 }

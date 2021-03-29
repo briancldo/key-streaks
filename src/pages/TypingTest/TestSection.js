@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import Popper from '@material-ui/core/Popper';
 
 import Input from './InputSection';
 import WordSection from './WordSection';
@@ -28,6 +29,7 @@ export default function TestSection() {
   const [gameStatus, setGameStatus] = useState(GAME_STATUSES.ongoing);
   const [mistake, setMistake] = useState();
   const [leaderboard, setLeaderboard] = useState(getLeaderboard());
+  const currentWordRef = useRef(null);
   const styles = useStyles();
 
   function updateLeaderboard() {
@@ -84,13 +86,18 @@ export default function TestSection() {
 
   return (
     <div className={styles.testSection}>
-      <WordSection {...{ words, currentWordIndex }} />
-      <Input
-        currentWord={currentWord}
-        finishCurrentWord={finishCurrentWord}
-        disabled={gameStatus !== GAME_STATUSES.ongoing}
-        {...{ currentEntry, setCurrentEntry }}
-      />
+      <WordSection {...{ words, currentWordIndex, currentWordRef }} />
+      <>
+        <Popper open={mistake !== undefined} anchorEl={currentWordRef.current}>
+          <Mistake {...{ ...mistake, currentWord }} />
+        </Popper>
+        <Input
+          currentWord={currentWord}
+          finishCurrentWord={finishCurrentWord}
+          disabled={gameStatus !== GAME_STATUSES.ongoing}
+          {...{ currentEntry, setCurrentEntry }}
+        />
+      </>
       <p>
         Streak: <b style={{ color: 'green' }}>{currentStreak}</b> words!
       </p>
@@ -99,11 +106,6 @@ export default function TestSection() {
         <button id='new-game-button' onClick={restartGame}>
           New Game (Enter key)
         </button>
-      )}
-      {mistake && (
-        <div className={styles.mistake}>
-          <Mistake {...{ ...mistake, currentWord }} />
-        </div>
       )}
       <Leaderboard leaderboard={leaderboard} />
     </div>
