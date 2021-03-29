@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 
 import { useStyles } from './InputSection.styles';
+import { mistakes } from '../../data/constants';
 
 const inputSectionInputProps = {
   style: {
@@ -16,6 +17,7 @@ export default function InputSection(props) {
     disabled,
     currentEntry,
     setCurrentEntry,
+    inputRef,
   } = props;
   const styles = useStyles();
 
@@ -33,8 +35,12 @@ export default function InputSection(props) {
     const value = event.target.value;
 
     if (value === currentWord) finishCurrentWord();
-    if (!currentWord.startsWith(value)) finishCurrentWord(false);
-    if (value.length < currentEntry.length) finishCurrentWord(false);
+    if (!currentWord.startsWith(value))
+      finishCurrentWord({
+        mistake: { code: mistakes.INCORRECT_CHARACTER, entry: value },
+      });
+    if (value.length < currentEntry.length)
+      finishCurrentWord({ mistake: { code: mistakes.BACKSPACE } });
 
     setCurrentEntry(value);
   }
@@ -51,6 +57,7 @@ export default function InputSection(props) {
       autoComplete='off'
       className={styles.inputSection}
       InputProps={inputSectionInputProps}
+      innerRef={inputRef}
     />
   );
 }

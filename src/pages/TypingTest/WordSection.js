@@ -8,7 +8,7 @@ function joinWords(wordsArray) {
 }
 
 export default function WordSection(props) {
-  const { words = [], currentWordIndex } = props;
+  const { words = [], currentWordIndex, currentWordRef } = props;
   const completedWords = words.slice(0, currentWordIndex);
   const incompleteWords =
     currentWordIndex + 1 === words.length
@@ -21,7 +21,6 @@ export default function WordSection(props) {
         '\n'
       )
     : completedWords.splice(words.length / 2, 0, '\n');
-  console.log({ completedWords, incompleteWords });
   const completedWordsString = joinWords(completedWords);
   const incompleteWordsString = joinWords(incompleteWords);
   const styles = useStyles();
@@ -31,7 +30,10 @@ export default function WordSection(props) {
       <p style={{ whiteSpace: 'pre-wrap' }}>
         <span style={{ color: '#ccc' }}>{completedWordsString}</span>
         &nbsp;
-        <span style={{ color: 'red' }}>{words[currentWordIndex]}</span>&nbsp;
+        <span style={{ color: 'red' }} ref={currentWordRef}>
+          {words[currentWordIndex]}
+        </span>
+        &nbsp;
         {incompleteWordsString}
       </p>
     </Card>

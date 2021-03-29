@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import Popper from '@material-ui/core/Popper';
 
 import Input from './InputSection';
 import WordSection from './WordSection';
+import Mistake from './Mistake';
 import Leaderboard from './Leaderboard';
 import { useStyles } from './TestSection.styles';
 import { getWordBatch } from '../../data/words';
@@ -25,7 +27,9 @@ export default function TestSection() {
   const [currentEntry, setCurrentEntry] = useState('');
   const [currentStreak, setCurrentStreak] = useState(0);
   const [gameStatus, setGameStatus] = useState(GAME_STATUSES.ongoing);
+  const [mistake, setMistake] = useState();
   const [leaderboard, setLeaderboard] = useState(getLeaderboard());
+  const currentWordRef = useRef(null);
   const styles = useStyles();
 
   function updateLeaderboard() {
@@ -57,8 +61,12 @@ export default function TestSection() {
     setWords(getNextWordBatch());
     setCurrentWordIndex(0);
   }
-  function finishCurrentWord(passed = true) {
-    if (!passed) return declareGameOver();
+  function handleMistake(mistake = {}) {
+    setMistake(mistake);
+    declareGameOver();
+  }
+  function finishCurrentWord({ mistake } = {}) {
+    if (mistake) return handleMistake(mistake);
 
     setCurrentWordIndex((index) => {
       if (index + 1 === words.length) finishCurrentPage();
@@ -72,18 +80,24 @@ export default function TestSection() {
     setCurrentEntry('');
     setCurrentStreak(0);
     setCurrentWordIndex(0);
+    setMistake();
     setGameStatus(GAME_STATUSES.ongoing);
   }
 
   return (
     <div className={styles.testSection}>
-      <WordSection {...{ words, currentWordIndex }} />
-      <Input
-        currentWord={currentWord}
-        finishCurrentWord={finishCurrentWord}
-        disabled={gameStatus !== GAME_STATUSES.ongoing}
-        {...{ currentEntry, setCurrentEntry }}
-      />
+      <WordSection {...{ words, currentWordIndex, currentWordRef }} />
+      <>
+        <Popper open={mistake !== undefined} anchorEl={currentWordRef.current}>
+          <Mistake {...{ ...mistake, currentWord }} />
+        </Popper>
+        <Input
+          currentWord={currentWord}
+          finishCurrentWord={finishCurrentWord}
+          disabled={gameStatus !== GAME_STATUSES.ongoing}
+          {...{ currentEntry, setCurrentEntry }}
+        />
+      </>
       <p>
         Streak: <b style={{ color: 'green' }}>{currentStreak}</b> words!
       </p>

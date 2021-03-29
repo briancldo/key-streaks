@@ -9,6 +9,10 @@ const useStyles = makeStyles({
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
+  mistake: {
+    minHeight: '5%',
+    minWidth: '10%',
+  },
 });
 
 export { useStyles };
