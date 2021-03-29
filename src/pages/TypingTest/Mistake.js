@@ -14,6 +14,17 @@ function BackspaceMistake() {
   return <Typography variant='h4'>Backspace</Typography>;
 }
 
+function getIncorrectCharacter(incorrectCharacter, correctCharacter, styles) {
+  if (incorrectCharacter !== ' ')
+    return (
+      <span className={styles.incorrectCharacter}>{incorrectCharacter}</span>
+    );
+
+  return (
+    <span className={styles.incorrectCharacterSpace}>{correctCharacter}</span>
+  );
+}
+
 function IncorrectCharacterMistake(props) {
   const { entry, currentWord } = props;
   const styles = useIncorrectCharacterStyles();
@@ -22,9 +33,11 @@ function IncorrectCharacterMistake(props) {
     <span>
       <Typography variant='h4'>
         {entry.slice(0, -1)}
-        <span className={styles.incorrectCharacter}>
-          {entry[entry.length - 1]}
-        </span>
+        {getIncorrectCharacter(
+          entry[entry.length - 1],
+          currentWord[entry.length - 1],
+          styles
+        )}
       </Typography>
 
       <Typography variant='h4'>

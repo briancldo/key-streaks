@@ -20,7 +20,10 @@ const useStyles = makeStyles({
 const useIncorrectCharacterStyles = makeStyles({
   incorrectCharacter: {
     backgroundColor: '#ff4444',
-    whiteSpace: 'pre',
+  },
+  incorrectCharacterSpace: {
+    backgroundColor: '#ff4444',
+    color: '#ff4444',
   },
 });
 
