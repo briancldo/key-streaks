@@ -3,40 +3,43 @@ import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 
 import { useStyles, useIncorrectCharacterStyles } from './Mistake.styles';
-import { mistakes } from '../../data/constants';
+import { mistakes } from '../../data/mistakes';
 
-const mistakeContentMapping = {
-  [mistakes.BACKSPACE]: BackspaceMistake,
-  [mistakes.INCORRECT_CHARACTER]: IncorrectCharacterMistake,
+const BackspaceMistake: React.FC<Record<string, unknown>> = () => {
+  return <Typography variant='h4'>Backspace</Typography>;
 };
 
-function BackspaceMistake() {
-  return <Typography variant='h4'>Backspace</Typography>;
+interface IncorrectCharacterMistakeProps {
+  entry: string;
+  currentWord: string;
 }
-
-function getIncorrectCharacter(incorrectCharacter, correctCharacter, styles) {
-  if (incorrectCharacter !== ' ')
-    return (
-      <span className={styles.incorrectCharacter}>{incorrectCharacter}</span>
-    );
-
-  return (
-    <span className={styles.incorrectCharacterSpace}>{correctCharacter}</span>
-  );
-}
-
-function IncorrectCharacterMistake(props) {
+const IncorrectCharacterMistake: React.FC<IncorrectCharacterMistakeProps> = (
+  props
+) => {
   const { entry, currentWord } = props;
   const styles = useIncorrectCharacterStyles();
+
+  function getIncorrectCharacter(
+    incorrectCharacter: string,
+    correctCharacter: string
+  ) {
+    if (incorrectCharacter !== ' ')
+      return (
+        <span className={styles.incorrectCharacter}>{incorrectCharacter}</span>
+      );
+
+    return (
+      <span className={styles.incorrectCharacterSpace}>{correctCharacter}</span>
+    );
+  }
 
   return (
     <span>
       <Typography variant='h4'>
         {entry.slice(0, -1)}
         {getIncorrectCharacter(
-          entry[entry.length - 1],
-          currentWord[entry.length - 1],
-          styles
+          entry[entry.length - 1] as string,
+          currentWord[entry.length - 1] as string
         )}
       </Typography>
 
@@ -49,9 +52,21 @@ function IncorrectCharacterMistake(props) {
       </Typography>
     </span>
   );
-}
+};
 
-export default function Mistake(props) {
+interface MistakeMapping {
+  [mistakes.BACKSPACE]: React.FC<Record<string, unknown>>;
+  [mistakes.INCORRECT_CHARACTER]: React.FC<IncorrectCharacterMistakeProps>;
+}
+const mistakeContentMapping: MistakeMapping = {
+  [mistakes.BACKSPACE]: BackspaceMistake,
+  [mistakes.INCORRECT_CHARACTER]: IncorrectCharacterMistake,
+};
+
+interface MistakeProps extends IncorrectCharacterMistakeProps {
+  code: mistakes;
+}
+const Mistake: React.FC<MistakeProps> = (props) => {
   const styles = useStyles();
   const MistakeContent = mistakeContentMapping[props.code];
 
@@ -60,4 +75,5 @@ export default function Mistake(props) {
       <MistakeContent {...props} />
     </Card>
   );
-}
+};
+export default Mistake;
