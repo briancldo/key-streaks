@@ -1,4 +1,4 @@
-function getWordBatch(size) {
+function getWordBatch(size: number) {
   const batch = [];
   const wordsLength = words.length;
 
