@@ -4,7 +4,7 @@ import Logo from '../../components/Logo';
 import TestSection from './TestSection';
 import { useRootStyles } from './TypingTest.styles';
 
-export default function TypingTest() {
+const TypingTest: React.FC = () => {
   const styles = useRootStyles();
 
   return (
@@ -15,4 +15,6 @@ export default function TypingTest() {
       </div>
     </div>
   );
-}
+};
+
+export default TypingTest;
