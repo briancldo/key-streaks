@@ -56,7 +56,8 @@
     "format": "prettier --write \"src/**/*.js\"",
     "cruise-deps": "depcruise \"src/**/*.js\"",
     "cm": "git-cz",
-    "release": "standard-version"
+    "release": "standard-version",
+    "typecheck": "tsc"
   },
   "eslintConfig": {
     "extends": [
