@@ -53,8 +53,8 @@
     "test:watch": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint \"src/**/*.{js,json}\"",
-    "format": "prettier --write \"src/**/*.js\"",
-    "cruise-deps": "depcruise \"src/**/*.js\"",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "cruise-deps": "depcruise \"src/**/*.{ts,tsx}\"",
     "cm": "git-cz",
     "release": "standard-version",
     "typecheck": "tsc"
@@ -85,7 +85,7 @@
     }
   },
   "lint-staged": {
-    "*.js": [
+    "*.{ts,tsx}": [
       "npm run format",
       "npm run lint",
       "npm run cruise-deps"
