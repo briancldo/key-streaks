@@ -3,7 +3,7 @@ import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 
 import { useStyles, useIncorrectCharacterStyles } from './Mistake.styles';
-import { mistakes } from '../../data/mistakes';
+import { Mistakes } from '../../data/mistakes';
 
 const BackspaceMistake: React.FC<Record<string, unknown>> = () => {
   return <Typography variant='h4'>Backspace</Typography>;
@@ -55,16 +55,16 @@ const IncorrectCharacterMistake: React.FC<IncorrectCharacterMistakeProps> = (
 };
 
 interface MistakeMapping {
-  [mistakes.BACKSPACE]: React.FC<Record<string, unknown>>;
-  [mistakes.INCORRECT_CHARACTER]: React.FC<IncorrectCharacterMistakeProps>;
+  [Mistakes.BACKSPACE]: React.FC<Record<string, unknown>>;
+  [Mistakes.INCORRECT_CHARACTER]: React.FC<IncorrectCharacterMistakeProps>;
 }
 const mistakeContentMapping: MistakeMapping = {
-  [mistakes.BACKSPACE]: BackspaceMistake,
-  [mistakes.INCORRECT_CHARACTER]: IncorrectCharacterMistake,
+  [Mistakes.BACKSPACE]: BackspaceMistake,
+  [Mistakes.INCORRECT_CHARACTER]: IncorrectCharacterMistake,
 };
 
 interface MistakeProps extends IncorrectCharacterMistakeProps {
-  code: mistakes;
+  code: Mistakes;
 }
 const Mistake: React.FC<MistakeProps> = (props) => {
   const styles = useStyles();
