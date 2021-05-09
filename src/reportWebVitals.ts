@@ -1,5 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const reportWebVitals = (onPerfEntry?: any): void => {
+import { ReportHandler } from 'web-vitals';
+
+const reportWebVitals = (onPerfEntry?: ReportHandler): void => {
   if (onPerfEntry && onPerfEntry instanceof Function) {
     import('web-vitals')
       .then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
