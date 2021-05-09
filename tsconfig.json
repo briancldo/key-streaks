@@ -32,12 +32,6 @@
     "noImplicitReturns": true,
     "noUncheckedIndexedAccess": true,
     "moduleResolution": "node",
-    "baseUrl": "./src",
-    "paths": {
-      "@utils/*": ["utils/*"],
-      "@data/*": ["data/*"],
-      "@components": ["components/*"]
-    },
     "types": [],
     "esModuleInterop": true,
     "skipLibCheck": true,

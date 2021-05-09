@@ -8,9 +8,14 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
+import { Leaderboard } from '../../utils/leaderboard';
 import { useStyles } from './Leaderboard.styles';
 
-export default function Leaderboard(props) {
+interface LeaderboardProps {
+  leaderboard: Leaderboard;
+}
+
+const LeaderboardUI: React.FC<LeaderboardProps> = (props) => {
   const { leaderboard } = props;
   const styles = useStyles();
 
@@ -37,4 +42,6 @@ export default function Leaderboard(props) {
       </TableContainer>
     </Card>
   );
-}
+};
+
+export default LeaderboardUI;

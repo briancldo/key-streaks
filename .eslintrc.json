@@ -45,7 +45,8 @@
         "unicorn/prefer-query-selector": "off",
         "unicorn/prevent-abbreviations": "off",
         "unicorn/no-null": "off",
-        "react/prop-types": "off"
+        "react/prop-types": "off",
+        "@typescript-eslint/no-explicit-any": "off"
     },
     "settings": {
         "react": {

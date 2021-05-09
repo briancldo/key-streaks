@@ -3,11 +3,17 @@ import Card from '@material-ui/core/Card';
 
 import { useStyles } from './WordSection.styles';
 
-function joinWords(wordsArray) {
+function joinWords(wordsArray: string[]) {
   return wordsArray.join(' ');
 }
 
-export default function WordSection(props) {
+interface WordSectionProps {
+  words?: string[];
+  currentWordIndex: number;
+  currentWordRef: any;
+}
+
+const WordSection: React.FC<WordSectionProps> = (props) => {
   const { words = [], currentWordIndex, currentWordRef } = props;
   const completedWords = words.slice(0, currentWordIndex);
   const incompleteWords =
@@ -38,4 +44,6 @@ export default function WordSection(props) {
       </p>
     </Card>
   );
-}
+};
+
+export default WordSection;
