@@ -12,7 +12,7 @@ import { getLeaderboard, addScoreIfQualified } from '../../utils/leaderboard';
 
 const WORDS_PER_PAGE = 10;
 enum GAME_STATUSES {
-  ongoing = 0,
+  ongoing = '',
   won = 'You won!',
   lost = 'You lost!',
 }
