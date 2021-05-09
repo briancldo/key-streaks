@@ -3,7 +3,7 @@ import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 
 import { useStyles, useIncorrectCharacterStyles } from './Mistake.styles';
-import { Mistakes } from '../../data/mistakes';
+import { Mistakes } from '../../data/constants';
 
 interface BackspaceMistakeProps {
   code: Mistakes;

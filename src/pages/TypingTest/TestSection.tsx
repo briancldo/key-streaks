@@ -7,7 +7,7 @@ import Mistake from './Mistake';
 import LeaderboardUI from './Leaderboard';
 import { useStyles } from './TestSection.styles';
 import { getWordBatch } from '../../data/words';
-import { Mistakes } from '../../data/mistakes';
+import { Mistakes } from '../../data/constants';
 import { getLeaderboard, addScoreIfQualified } from '../../utils/leaderboard';
 
 const WORDS_PER_PAGE = 10;

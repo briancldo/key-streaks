@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 
 import { useStyles } from './InputSection.styles';
-import { Mistakes } from '../../data/mistakes';
+import { Mistakes } from '../../data/constants';
 import { MistakeData } from './TestSection';
 
 const inputSectionInputProps = {
