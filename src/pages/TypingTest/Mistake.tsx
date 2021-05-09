@@ -5,19 +5,27 @@ import Typography from '@material-ui/core/Typography';
 import { useStyles, useIncorrectCharacterStyles } from './Mistake.styles';
 import { Mistakes } from '../../data/mistakes';
 
-const BackspaceMistake: React.FC<Record<string, unknown>> = () => {
-  return <Typography variant='h4'>Backspace</Typography>;
-};
+interface BackspaceMistakeProps {
+  code: Mistakes;
+  currentWord: string;
+}
 
 interface IncorrectCharacterMistakeProps {
+  code: Mistakes;
   entry: string;
   currentWord: string;
 }
-const IncorrectCharacterMistake: React.FC<IncorrectCharacterMistakeProps> = (
-  props
-) => {
-  const { entry, currentWord } = props;
+
+type MistakeProps = BackspaceMistakeProps | IncorrectCharacterMistakeProps;
+
+const BackspaceMistake: React.FC<MistakeProps> = () => {
+  return <Typography variant='h4'>Backspace</Typography>;
+};
+
+const IncorrectCharacterMistake: React.FC<MistakeProps> = (props) => {
   const styles = useIncorrectCharacterStyles();
+  if (!('entry' in props)) return null;
+  const { entry, currentWord } = props;
 
   function getIncorrectCharacter(
     incorrectCharacter: string,
@@ -55,21 +63,19 @@ const IncorrectCharacterMistake: React.FC<IncorrectCharacterMistakeProps> = (
 };
 
 interface MistakeMapping {
-  [Mistakes.BACKSPACE]: React.FC<Record<string, unknown>>;
-  [Mistakes.INCORRECT_CHARACTER]: React.FC<IncorrectCharacterMistakeProps>;
+  [Mistakes.BACKSPACE]: React.FC<MistakeProps>;
+  [Mistakes.INCORRECT_CHARACTER]: React.FC<MistakeProps>;
 }
 const mistakeContentMapping: MistakeMapping = {
   [Mistakes.BACKSPACE]: BackspaceMistake,
   [Mistakes.INCORRECT_CHARACTER]: IncorrectCharacterMistake,
 };
 
-interface MistakeProps extends IncorrectCharacterMistakeProps {
-  code: Mistakes;
-}
 const Mistake: React.FC<MistakeProps> = (props) => {
   const styles = useStyles();
-  const MistakeContent = mistakeContentMapping[props.code];
+  if (props.code === Mistakes.NONE) return null;
 
+  const MistakeContent = mistakeContentMapping[props.code];
   return (
     <Card className={styles.mistakeWrapper} raised>
       <MistakeContent {...props} />

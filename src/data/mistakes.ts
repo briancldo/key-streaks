@@ -1,4 +1,5 @@
 export enum Mistakes {
-  BACKSPACE = 1,
+  NONE,
+  BACKSPACE,
   INCORRECT_CHARACTER,
 }
