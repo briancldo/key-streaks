@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 
 import { useStyles } from './InputSection.styles';
-import { mistakes } from '../../data/constants';
+import { Mistakes } from '../../data/constants';
+import { MistakeData } from './TestSection';
 
 const inputSectionInputProps = {
   style: {
@@ -10,19 +11,29 @@ const inputSectionInputProps = {
   },
 };
 
-export default function InputSection(props) {
+interface InputSectionProps {
+  currentWord: string;
+  finishCurrentWord: (context?: { mistake: MistakeData }) => void;
+  disabled: boolean;
+  currentEntry: string;
+  setCurrentEntry: React.Dispatch<React.SetStateAction<string>>;
+}
+const InputSection: React.FC<InputSectionProps> = (props) => {
   const {
     currentWord,
     finishCurrentWord,
     disabled,
     currentEntry,
     setCurrentEntry,
-    inputRef,
   } = props;
   const styles = useStyles();
 
   function focusOnInput() {
-    if (!disabled) document.getElementById('typing-test-input').focus();
+    if (disabled) return;
+
+    const typingTestInput = document.getElementById('typing-test-input');
+    if (!typingTestInput) return;
+    typingTestInput.focus();
   }
   useEffect(focusOnInput, [disabled]);
 
@@ -31,16 +42,17 @@ export default function InputSection(props) {
   }
   useEffect(clearCurrentEntry, [currentWord, setCurrentEntry]);
 
-  function checkLetter(event) {
+  function checkLetter(event: React.ChangeEvent<HTMLInputElement>) {
+    if (!event?.target) return;
     const value = event.target.value;
 
     if (value === currentWord) finishCurrentWord();
     if (!currentWord.startsWith(value))
       finishCurrentWord({
-        mistake: { code: mistakes.INCORRECT_CHARACTER, entry: value },
+        mistake: { code: Mistakes.INCORRECT_CHARACTER, entry: value },
       });
     if (value.length < currentEntry.length)
-      finishCurrentWord({ mistake: { code: mistakes.BACKSPACE } });
+      finishCurrentWord({ mistake: { code: Mistakes.BACKSPACE } });
 
     setCurrentEntry(value);
   }
@@ -57,7 +69,9 @@ export default function InputSection(props) {
       autoComplete='off'
       className={styles.inputSection}
       InputProps={inputSectionInputProps}
-      innerRef={inputRef}
+      // innerRef={inputRef}
     />
   );
-}
+};
+
+export default InputSection;

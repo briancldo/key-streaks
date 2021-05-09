@@ -1,10 +1,10 @@
-function getWordBatch(size) {
+function getWordBatch(size: number): string[] {
   const batch = [];
   const wordsLength = words.length;
 
   while (batch.length < size) {
     const randomIndex = Math.floor(Math.random() * wordsLength);
-    batch.push(words[randomIndex]);
+    batch.push(words[randomIndex] as string);
   }
 
   return batch;

@@ -4,42 +4,54 @@ import Popper from '@material-ui/core/Popper';
 import Input from './InputSection';
 import WordSection from './WordSection';
 import Mistake from './Mistake';
-import Leaderboard from './Leaderboard';
+import LeaderboardUI from './Leaderboard';
 import { useStyles } from './TestSection.styles';
 import { getWordBatch } from '../../data/words';
+import { Mistakes } from '../../data/constants';
 import { getLeaderboard, addScoreIfQualified } from '../../utils/leaderboard';
 
 const WORDS_PER_PAGE = 10;
-const GAME_STATUSES = {
-  ongoing: undefined,
-  won: 'You won!',
-  lost: 'You lost!',
-};
+enum GAME_STATUSES {
+  ongoing = '',
+  won = 'You won!',
+  lost = 'You lost!',
+}
 
 function getNextWordBatch() {
   return getWordBatch(WORDS_PER_PAGE);
 }
 
-export default function TestSection() {
+export interface MistakeData {
+  code: Mistakes;
+  entry?: string;
+}
+const mistakeInitial: MistakeData = { code: Mistakes.NONE };
+
+const TestSection: React.FC = () => {
   const [words, setWords] = useState(getNextWordBatch());
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [currentWord, setCurrentWord] = useState(words[0]);
+  const [currentWord, setCurrentWord] = useState(words[0] as string);
   const [currentEntry, setCurrentEntry] = useState('');
   const [currentStreak, setCurrentStreak] = useState(0);
   const [gameStatus, setGameStatus] = useState(GAME_STATUSES.ongoing);
-  const [mistake, setMistake] = useState();
+  const [mistake, setMistake] = useState<MistakeData>(mistakeInitial);
   const [leaderboard, setLeaderboard] = useState(getLeaderboard());
-  const currentWordRef = useRef(null);
+  const currentWordRef = useRef();
   const styles = useStyles();
 
   function updateLeaderboard() {
-    const newLeaderboard = addScoreIfQualified(currentStreak, leaderboard);
+    const newLeaderboard = addScoreIfQualified(
+      { streak: currentStreak },
+      leaderboard
+    );
     setLeaderboard(newLeaderboard);
   }
   function reactToGameOver() {
     if (gameStatus !== GAME_STATUSES.ongoing) {
       updateLeaderboard();
-      document.getElementById('new-game-button').focus();
+      const newGameButton = document.getElementById('new-game-button');
+      if (!newGameButton) return;
+      newGameButton.focus();
     }
   }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -48,7 +60,7 @@ export default function TestSection() {
   function computeCurrentWord() {
     if (currentWordIndex >= words.length) return;
 
-    let word = `${words[currentWordIndex]} `;
+    const word = `${words[currentWordIndex]} `;
     setCurrentWord(word);
   }
   useEffect(computeCurrentWord, [currentWordIndex, words]);
@@ -61,12 +73,12 @@ export default function TestSection() {
     setWords(getNextWordBatch());
     setCurrentWordIndex(0);
   }
-  function handleMistake(mistake = {}) {
+  function handleMistake(mistake: MistakeData) {
     setMistake(mistake);
     declareGameOver();
   }
-  function finishCurrentWord({ mistake } = {}) {
-    if (mistake) return handleMistake(mistake);
+  function finishCurrentWord(context?: { mistake: MistakeData }) {
+    if (context) return handleMistake(context.mistake as MistakeData);
 
     setCurrentWordIndex((index) => {
       if (index + 1 === words.length) finishCurrentPage();
@@ -80,7 +92,7 @@ export default function TestSection() {
     setCurrentEntry('');
     setCurrentStreak(0);
     setCurrentWordIndex(0);
-    setMistake();
+    setMistake(mistakeInitial);
     setGameStatus(GAME_STATUSES.ongoing);
   }
 
@@ -107,7 +119,9 @@ export default function TestSection() {
           New Game (Enter key)
         </button>
       )}
-      <Leaderboard leaderboard={leaderboard} />
+      <LeaderboardUI leaderboard={leaderboard} />
     </div>
   );
-}
+};
+
+export default TestSection;

@@ -48,7 +48,7 @@ describe('leaderboard', () => {
         JSON.stringify([{ streak: 2 }, { streak: 1 }])
       );
 
-      addScoreIfQualified(3);
+      addScoreIfQualified({ streak: 3 });
       const leaderboard = getLeaderboard();
 
       expect(leaderboard).toEqual([
@@ -63,12 +63,12 @@ describe('leaderboard', () => {
       for (let i = 10; i > 0; i--) savedLeaderboard.push({ streak: i });
       localStorage.setItem(leaderboardKey, JSON.stringify(savedLeaderboard));
 
-      addScoreIfQualified(11);
+      addScoreIfQualified({ streak: 11 });
       const leaderboard = getLeaderboard();
 
       expect(leaderboard).toHaveLength(10);
-      expect(leaderboard[0].streak).toBe(11);
-      expect(leaderboard[9].streak).toBe(2);
+      expect(leaderboard[0]).toEqual({ streak: 11 });
+      expect(leaderboard[9]).toEqual({ streak: 2 });
       expect(
         leaderboard.sort((a, b) => (a.streak < b.streak ? 1 : -1))
       ).toEqual(leaderboard);
@@ -79,12 +79,12 @@ describe('leaderboard', () => {
       for (let i = 10; i > 0; i--) savedLeaderboard.push({ streak: i });
       localStorage.setItem(leaderboardKey, JSON.stringify(savedLeaderboard));
 
-      addScoreIfQualified(0);
+      addScoreIfQualified({ streak: 0 });
       const leaderboard = getLeaderboard();
 
       expect(leaderboard).toHaveLength(10);
-      expect(leaderboard[0].streak).toBe(10);
-      expect(leaderboard[9].streak).toBe(1);
+      expect(leaderboard[0]).toEqual({ streak: 10 });
+      expect(leaderboard[9]).toEqual({ streak: 1 });
       expect(
         leaderboard.sort((a, b) => (a.streak < b.streak ? 1 : -1))
       ).toEqual(leaderboard);
@@ -94,7 +94,7 @@ describe('leaderboard', () => {
       const savedLeaderboard = [10, 9, 7, 6].map((streak) => ({ streak }));
       localStorage.setItem(leaderboardKey, JSON.stringify(savedLeaderboard));
 
-      addScoreIfQualified(8);
+      addScoreIfQualified({ streak: 8 });
       const leaderboard = getLeaderboard();
 
       expect(leaderboard).toEqual([
