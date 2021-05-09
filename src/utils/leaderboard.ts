@@ -1,7 +1,12 @@
 const MAX_SCORES = 10;
 const leaderboardKey = 'personalLeaderboard';
 
-function validateLeaderboard(leaderboard) {
+interface LeaderboardEntry {
+  streak: number;
+}
+type Leaderboard = LeaderboardEntry[];
+
+function validateLeaderboard(leaderboard: Leaderboard) {
   if (!Array.isArray(leaderboard)) throw new Error('noarr');
 
   for (const place of leaderboard) {
@@ -9,10 +14,10 @@ function validateLeaderboard(leaderboard) {
   }
 }
 
-function getLeaderboard() {
+function getLeaderboard(): Leaderboard {
   try {
     const leaderboardString = localStorage.getItem(leaderboardKey) || '[]';
-    const leaderboard = JSON.parse(leaderboardString);
+    const leaderboard: Leaderboard = JSON.parse(leaderboardString);
     validateLeaderboard(leaderboard);
 
     return leaderboard;
@@ -22,8 +27,11 @@ function getLeaderboard() {
   }
 }
 
-function addScoreIfQualified(streak, leaderboard = getLeaderboard()) {
-  const newLeaderboard = [...leaderboard, { streak }]
+function addScoreIfQualified(
+  leaderboardEntry: LeaderboardEntry,
+  leaderboard = getLeaderboard()
+): Leaderboard {
+  const newLeaderboard: Leaderboard = [...leaderboard, leaderboardEntry]
     .sort((a, b) => (a.streak < b.streak ? 1 : -1))
     .slice(0, MAX_SCORES);
   localStorage.setItem(leaderboardKey, JSON.stringify(newLeaderboard));
