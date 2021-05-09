@@ -4,7 +4,7 @@ const leaderboardKey = 'personalLeaderboard';
 interface LeaderboardEntry {
   streak: number;
 }
-type Leaderboard = LeaderboardEntry[];
+export type Leaderboard = LeaderboardEntry[];
 
 function validateLeaderboard(leaderboard: Leaderboard) {
   if (!Array.isArray(leaderboard)) throw new Error('noarr');
